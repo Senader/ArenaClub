@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Tue Dec 11 11:39:16 2012 clery1 plassat
+** Last update Tue Dec 11 11:46:04 2012 clery1 plassat
 */
 
 #include <stdio.h>
@@ -315,7 +315,8 @@ int	init_game(t_all *all)
   while (file[i] != '\n')
     value[j++] = file[i++];
   value[j] = '\0';
-  ++i; all->p1.damages = my_getnbr(value);
+  ++i;
+  all->p1.damages = my_getnbr(value);
   close(fd);
 
   all->p2.name = malloc(sizeof(all->p2.name) * 6);
@@ -395,7 +396,7 @@ int	save(t_all *all)
   int	fd;
   char	x;
 
-  fd = open("save.svg", O_RDWR);
+  fd = open("save.svg", O_WRONLY);
   if (fd == -1)
     {
       printf("Failed to save char.");
