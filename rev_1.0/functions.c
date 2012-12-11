@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Tue Dec 11 11:46:04 2012 clery1 plassat
+** Last update Tue Dec 11 21:43:51 2012 vincent bourcois
 */
 
 #include <stdio.h>
@@ -22,14 +22,18 @@ int	expose(t_all *all)
   if (all->system.phase == 0)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 250, 0xFFFFFF, "PRESS SPACE");
   if (all->system.phase == 2)
-    end_phase(all);
+    end_phase(all, 1);
 }
 
-int	end_phase(t_all *all)
+int	end_phase(t_all *all, int once)
 {
   all->system.phase = 2;
   mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
   if (all->p1.hp > 0 && all->p2.hp <= 0)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 215, 250, 0xFF00, "YOU WON");
+  else
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 207, 250, 0xFF0000, "YOU LOOSE");
+  if (all->p1.hp > 0 && all->p2.hp <= 0 && once == 0)
     {
       all->p1.xp += 100;
       if (all->p1.xp >= 500)
@@ -42,7 +46,7 @@ int	end_phase(t_all *all)
       save(all);
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 215, 250, 0xFF00, "YOU WON");
     }
-  else if (all->p1.hp <= 0 && all->p2.hp > 0)
+  else if (all->p1.hp <= 0 && all->p2.hp > 0 && once == 0)
     {
       all->p1.xp += 20;
       if (all->p1.xp >= 500)
@@ -60,9 +64,17 @@ int	end_phase(t_all *all)
 
 int	gere_key(int key, t_all *all)
 {
+  menu_cursor(key, all);
   if (key == 32)
     {
-      if (all->system.phase == 2 || all->system.phase == 0)
+      if (all->system.phase == 0)
+	{
+	  all->system.phase = 3;
+	  menu(all);
+	}
+      if (all->system.phase == 4)
+	menu(all);
+      if (all->system.phase == 2)
 	{
 	  init_game(all);
 	  all->system.phase = 1;
@@ -70,11 +82,13 @@ int	gere_key(int key, t_all *all)
 	  put_ui_to_window(all);
 	}
     }
-  if (key == 65307)
+  if (key == 65307 && all->system.phase != 2 && all->system.phase != 4)
     {
       usleep(800000);
       exit(1);
     }
+  if (key == 65307 && (all->system.phase == 2 || all->system.phase == 4))
+    menu(all);
   if (all->system.phase == 1)
     {
       if (key == 38)
@@ -249,12 +263,18 @@ int	put_ui_to_window(t_all *all)
 	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 350, 350, 0xFFFFFF, "Meditation, 2 turns left");
       if (all->p1.meditate_last == 1)
 	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 350, 350, 0xFFFFFF, "Meditation, 1 turns left");
+      if (all->p2.meditate_last == 3)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 20, 70, 0xFFFFFF, "Meditation, 3 turns left");
+      if (all->p2.meditate_last == 2)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 20, 70, 0xFFFFFF, "Meditation, 2 turns left");
+      if (all->p2.meditate_last == 1)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 20, 70, 0xFFFFFF, "Meditation, 1 turns left");
       if (all->system.error_msg == 1)
 	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 50, 250, 0xFF0000, "Not enough energy");
       all->system.error_msg = 0;
     }
   if (all->p2.hp <= 0 || all->p1.hp <= 0)
-    end_phase(all);
+    end_phase(all, 0);
 }
 
 int	init_game(t_all *all)

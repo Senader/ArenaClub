@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Nov 22 20:48:52 2012 vincent bourcois
-** Last update Tue Dec 11 10:15:49 2012 clery1 plassat
+** Last update Tue Dec 11 20:39:57 2012 vincent bourcois
 */
 
 #ifndef PROJECT_H_
@@ -33,6 +33,7 @@ typedef struct	s_system
   void	*mlx_w;
   int	error_msg;
   int	phase;
+  int	cursor;
 }t_sys;
 
 typedef struct	s_all
@@ -42,12 +43,13 @@ typedef struct	s_all
   t_char	p2;
 }t_all;
 
+#include <stdlib.h>
 
 void	swap(char *, char *);
 int	my_strlength(char *);
 char	*int_to_char(int);
 int	expose(t_all *all);
-int	end_phase(t_all *all);
+int	end_phase(t_all *all, int once);
 int	gere_key(int key, t_all *all);
 char	*getfile(int fd);
 int	put_ui_to_window(t_all *all);

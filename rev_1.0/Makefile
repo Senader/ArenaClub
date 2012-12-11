@@ -5,7 +5,7 @@
 ## Login   <bourco_v@epitech.net>
 ## 
 ## Started on  Wed Oct 24 14:09:59 2012 vincent bourcois
-## Last update Mon Dec 10 15:51:41 2012 clery1 plassat
+## Last update Tue Dec 11 20:37:28 2012 vincent bourcois
 ##
 
 SRC		= main.c \
@@ -14,6 +14,7 @@ SRC		= main.c \
 		fight.c \
 		my_strcpy.c \
 		getfile.c \
+		menus.c
 
 NAME		= game
 
