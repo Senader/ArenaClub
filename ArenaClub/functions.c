@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Mon Dec 10 16:16:58 2012 clery1 plassat
+** Last update Tue Dec 11 10:11:18 2012 clery1 plassat
 */
 
 #include <stdio.h>
@@ -308,8 +308,8 @@ int	init_game(t_all *all)
   all->p2.name = "Enemy";
   all->p2.energy = 100;
   all->p2.energy_max = 100;
-  all->p2.hp = 10;
-  all->p2.hp_max = 10;
+  all->p2.hp = 1000;
+  all->p2.hp_max = 1000;
   all->p2.meditate_last = 0;
   all->p2.regen_energy = 10;  
   all->p2.regen_base = 10;  
