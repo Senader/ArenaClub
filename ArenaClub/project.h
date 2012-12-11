@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Nov 22 20:48:52 2012 vincent bourcois
-** Last update Mon Dec 10 16:08:53 2012 clery1 plassat
+** Last update Tue Dec 11 10:15:49 2012 clery1 plassat
 */
 
 #ifndef PROJECT_H_
@@ -20,6 +20,8 @@ typedef struct	s_character
   int	hp_max;
   int	regen_base;
   int	regen_energy;
+  int	damages;
+  int	healing;
   int	meditate_last;
   int	xp;
   int	lvl;

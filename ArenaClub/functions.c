@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Tue Dec 11 10:11:18 2012 clery1 plassat
+** Last update Tue Dec 11 11:39:16 2012 clery1 plassat
 */
 
 #include <stdio.h>
@@ -36,6 +36,7 @@ int	end_phase(t_all *all)
 	{
 	  all->p1.xp = 0;
 	  ++(all->p1.lvl);
+	  all->p1.damages += 15;
 	  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 182, 300, 0xFFFF00, "YOU GAINED A LEVEL");
 	}
       save(all);
@@ -48,6 +49,7 @@ int	end_phase(t_all *all)
 	{
 	  all->p1.xp = 0;
 	  ++(all->p1.lvl);
+	  all->p1.damages += 15;
 	  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 182, 300, 0xFFFF00, "YOU GAINED A LEVEL");
 	}
       save(all);
@@ -119,19 +121,26 @@ int	gere_key(int key, t_all *all)
 	}
       if (key == 34)
 	{
-	  all->p1.energy -= 40;
-	  potion(all, &(all->p1), &(all->p2));
-	  all->p1.energy += all->p1.regen_energy;
-	  if (all->p1.meditate_last > 0)
-	    all->p1.meditate_last -= 1;
-	  if (all->p1.meditate_last == 0)
-	    all->p1.regen_energy = 10;
-	  if (all->system.phase == 1)
+	  if (all->p1.energy >= 40)
 	    {
-	      clear_sides(all);
-	      put_ui_to_window(all);
-	      enemy_phase(all, &(all->p2), &(all->p1));
-	      clear_sides(all);
+	      potion(all, &(all->p1), &(all->p2));
+	      all->p1.energy += all->p1.regen_energy;
+	      if (all->p1.meditate_last > 0)
+		all->p1.meditate_last -= 1;
+	      if (all->p1.meditate_last == 0)
+		all->p1.regen_energy = 10;
+	      if (all->system.phase == 1)
+		{
+		  clear_sides(all);
+		  put_ui_to_window(all);
+		  enemy_phase(all, &(all->p2), &(all->p1));
+		  clear_sides(all);
+		  put_ui_to_window(all);
+		}
+	    }
+	  else
+	    {
+	      all->system.error_msg = 1;
 	      put_ui_to_window(all);
 	    }
 	}
@@ -152,15 +161,15 @@ int	gere_key(int key, t_all *all)
     }
 }
 
-int	clear_sides(t_all *all)
-{
-  void	*mlx_clear;
-  int	x;
-  int	y;
+  int	clear_sides(t_all *all)
+  {
+    void	*mlx_clear;
+    int	x;
+    int	y;
 
-  mlx_clear = mlx_new_image(all->system.mlx_p, 500, 318);
-  mlx_put_image_to_window(all->system.mlx_p, all->system.mlx_w, mlx_clear, 0, 42);  
-}
+    mlx_clear = mlx_new_image(all->system.mlx_p, 500, 318);
+    mlx_put_image_to_window(all->system.mlx_p, all->system.mlx_w, mlx_clear, 0, 42);  
+  }
 
 int	put_ui_to_window(t_all *all)
 {
@@ -171,20 +180,20 @@ int	put_ui_to_window(t_all *all)
 
   if (all->system.phase == 1)
     {
-      if (all->p1.energy > 100)
-	all->p1.energy = 100;
+      if (all->p1.energy > all->p1.energy_max)
+	all->p1.energy = all->p1.energy_max;
       if (all->p1.energy < 0)
 	all->p1.energy = 0;
-      if (all->p2.hp > 1000)
-	all->p2.hp = 1000;
+      if (all->p2.hp > all->p2.hp_max)
+	all->p2.hp = all->p2.hp_max;
       if (all->p2.hp < 0)
 	all->p1.energy = 0;
-      if (all->p1.hp > 1000)
-	all->p1.hp = 1000;
+      if (all->p1.hp > all->p1.hp_max)
+	all->p1.hp = all->p1.hp_max;
       if (all->p1.hp < 0)
 	all->p1.hp = 0;
-      if (all->p2.energy > 100)
-	all->p2.energy = 100;
+      if (all->p2.energy > all->p2.energy_max)
+	all->p2.energy = all->p2.energy_max;
       if (all->p2.energy < 0)
 	all->p2.energy = 0;
       mlx_i = mlx_new_image(all->system.mlx_p, 500, 140);
@@ -217,7 +226,7 @@ int	put_ui_to_window(t_all *all)
 	{
 	  i = 1;
 	  while (i < 20)
-	  mlx_pixel_put_to_image(mlx_i, x, y + i++, 0xFF0000);
+	    mlx_pixel_put_to_image(mlx_i, x, y + i++, 0xFF0000);
 	  ++x;
 	}
       put_enemy_ui(all);
@@ -302,6 +311,11 @@ int	init_game(t_all *all)
   value[j] = '\0';
   ++i;
   all->p1.lvl = my_getnbr(value);
+  j = 0;
+  while (file[i] != '\n')
+    value[j++] = file[i++];
+  value[j] = '\0';
+  ++i; all->p1.damages = my_getnbr(value);
   close(fd);
 
   all->p2.name = malloc(sizeof(all->p2.name) * 6);
@@ -310,6 +324,7 @@ int	init_game(t_all *all)
   all->p2.energy_max = 100;
   all->p2.hp = 1000;
   all->p2.hp_max = 1000;
+  all->p2.damages = 40;
   all->p2.meditate_last = 0;
   all->p2.regen_energy = 10;  
   all->p2.regen_base = 10;  
@@ -399,5 +414,8 @@ int	save(t_all *all)
   write(fd, &x, 1);
   write(fd, int_to_char(all->p1.lvl), my_strlen(int_to_char(all->p1.lvl)));
   write(fd, &x, 1);
+  write(fd, int_to_char(all->p1.damages), my_strlen(int_to_char(all->p1.damages)));
+  write(fd, &x, 1);
+  close(fd);
   return (0);
 }

@@ -5,7 +5,7 @@
 ** Login   <plassa_b@epitech.net>
 ** 
 ** Started on  Thu Oct 25 15:14:37 2012 clery1 plassat
-** Last update Mon Dec 10 15:41:00 2012 clery1 plassat
+** Last update Tue Dec 11 11:29:33 2012 clery1 plassat
 */
 
 #include "project.h"
@@ -14,7 +14,7 @@
 void	attack(t_all *all, t_char *first_char, t_char *second_char)
 {
   srandom(time(0) * getpid());
-  second_char->hp -= (random() % 20 + 41);
+  second_char->hp -= (random() % (first_char->damages / 2) + first_char->damages);
   if (second_char->hp > 0)
     {
       my_putstr(second_char->name);
@@ -33,8 +33,8 @@ void	attack(t_all *all, t_char *first_char, t_char *second_char)
 void	magic(t_all *all, t_char *first_char, t_char *second_char)
 {
   srandom(time(0) * getpid());
-  first_char->energy = first_char->energy - 40;
-  second_char->hp = second_char->hp - (random() % 40 + 81);
+  second_char->hp = second_char->hp - (random() % first_char->damages + first_char->damages * 2);
+  first_char->energy -= 40;
   if (second_char->hp > 0)
     {
       my_putstr(second_char->name);
