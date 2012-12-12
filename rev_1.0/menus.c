@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Tue Dec 11 11:46:03 2012 vincent bourcois
-** Last update Tue Dec 11 21:39:23 2012 vincent bourcois
+** Last update Wed Dec 12 10:29:30 2012 clery1 plassat
 */
 
 #include "project.h"
@@ -56,12 +56,12 @@ int	menu(t_all *all)
   mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 200, 0xFFFFFF, "Fight a bot !");
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 217, 475, 0xFFFFFF, "Press Enter");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFFFF, "Go at the armory !");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFFFF, "Go to the armory !");
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFFFF, "Flee (coward)");
   if (all->system.cursor == 0)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 200, 0xFFFF00, "Fight a bot !");
   if (all->system.cursor == 1)
-    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFF00, "Go at the armory !");
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFF00, "Go to the armory !");
   if (all->system.cursor == 2)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFF00, "Flee (coward)");
 }
