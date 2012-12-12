@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Tue Dec 11 21:43:51 2012 vincent bourcois
+** Last update Wed Dec 12 10:51:43 2012 vincent bourcois
 */
 
 #include <stdio.h>
@@ -29,6 +29,7 @@ int	end_phase(t_all *all, int once)
 {
   all->system.phase = 2;
   mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 130, 480, 0xFFFFFF, "Press Escape to return to the menu");
   if (all->p1.hp > 0 && all->p2.hp <= 0)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 215, 250, 0xFF00, "YOU WON");
   else
