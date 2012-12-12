@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Wed Dec 12 16:22:44 2012 clery1 plassat
+** Last update Wed Dec 12 17:13:05 2012 vincent bourcois
 */
 
 #include <stdio.h>
@@ -60,6 +60,7 @@ int	end_phase(t_all *all, int once)
 	  all->p1.xp = 0;
 	  ++(all->p1.lvl);
 	  all->p1.damages += 15;
+	  all->p1.healing += 15;
 	  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 182, 300, 0xFFFF00, "YOU GAINED A LEVEL");
 	}
       save(all);
@@ -73,6 +74,7 @@ int	end_phase(t_all *all, int once)
 	  all->p1.xp = 0;
 	  ++(all->p1.lvl);
 	  all->p1.damages += 15;
+	  all->p1.healing += 15;
 	  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 182, 300, 0xFFFF00, "YOU GAINED A LEVEL");
 	}
       save(all);
@@ -121,10 +123,7 @@ int	gere_key(int key, t_all *all)
 	}
     }
   if (key == 65307 && all->system.phase != 2 && all->system.phase != 4)
-    {
-      usleep(800000);
-      exit(1);
-    }
+    exit(1);
   if (key == 65307 && (all->system.phase == 2 || all->system.phase == 4))
     menu(all);
   if (all->system.phase == 1)
@@ -136,7 +135,7 @@ int	gere_key(int key, t_all *all)
 	  if (all->p1.meditate_last > 0)
 	    all->p1.meditate_last -= 1;
 	  if (all->p1.meditate_last == 0)
-	    all->p1.regen_energy = 10;
+	    all->p1.regen_energy = all->p1.regen_base;
 	  if (all->system.phase == 1)
 	    {
 	      clear_sides(all);
@@ -155,7 +154,7 @@ int	gere_key(int key, t_all *all)
 	      if (all->p1.meditate_last > 0)
 		all->p1.meditate_last -= 1;
 	      if (all->p1.meditate_last == 0)
-		all->p1.regen_energy = 10;
+		all->p1.regen_energy = all->p1.regen_base;
 	      if (all->system.phase == 1)
 		{
 		  clear_sides(all);
@@ -173,14 +172,14 @@ int	gere_key(int key, t_all *all)
 	}
       if (key == 34)
 	{
-	  if (all->p1.energy >= 40)
+	  if (all->p1.energy >= 60)
 	    {
 	      potion(all, &(all->p1), &(all->p2));
 	      all->p1.energy += all->p1.regen_energy;
 	      if (all->p1.meditate_last > 0)
 		all->p1.meditate_last -= 1;
 	      if (all->p1.meditate_last == 0)
-		all->p1.regen_energy = 10;
+		all->p1.regen_energy = all->p1.regen_base;
 	      if (all->system.phase == 1)
 		{
 		  clear_sides(all);
@@ -199,7 +198,7 @@ int	gere_key(int key, t_all *all)
       if (key == 39)
 	{
 	  all->p1.energy += all->p1.regen_energy;
-	  all->p1.regen_energy = 20;
+	  all->p1.regen_energy = all->p1.regen_base * 2;
 	  all->p1.meditate_last = 3;
 	  if (all->system.phase == 1)
 	    {
@@ -288,7 +287,7 @@ int	put_ui_to_window(t_all *all)
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 85, 427, 0xFFFFFF, "Attack  [1]");
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 420, 0xFFFFFF, "Special punch  [2]");
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 65, 470, 0xFFFFFF, "Use a bandage  [3]");
-      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 83, 485, 0xFFFF00, "40 energy");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 83, 485, 0xFFFF00, "60 energy");
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 335, 435, 0xFFFF00, "40 energy");
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 335, 476, 0xFFFFFF, "Meditation  [4]");
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 240, 395, 0x555555, int_to_char(all->p1.energy));
@@ -375,6 +374,12 @@ int	init_game(t_all *all)
   value[j] = '\0';
   ++i;
   all->p1.damages = my_getnbr(value);
+  j = 0;
+  while (file[i] != '\n')
+    value[j++] = file[i++];
+  value[j] = '\0';
+  ++i;
+  all->p1.healing = my_getnbr(value);
   close(fd);
 
   all->p2.name = malloc(sizeof(all->p2.name) * 6);
@@ -384,6 +389,7 @@ int	init_game(t_all *all)
   all->p2.hp = 1000;
   all->p2.hp_max = 1000;
   all->p2.damages = 40;
+  all->p2.healing = 40;
   all->p2.meditate_last = 0;
   all->p2.regen_energy = 10;  
   all->p2.regen_base = 10;  
@@ -474,6 +480,8 @@ int	save(t_all *all)
   write(fd, int_to_char(all->p1.lvl), my_strlen(int_to_char(all->p1.lvl)));
   write(fd, &x, 1);
   write(fd, int_to_char(all->p1.damages), my_strlen(int_to_char(all->p1.damages)));
+  write(fd, &x, 1);
+  write(fd, int_to_char(all->p1.healing), my_strlen(int_to_char(all->p1.healing)));
   write(fd, &x, 1);
   close(fd);
   return (0);

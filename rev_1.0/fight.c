@@ -5,7 +5,7 @@
 ** Login   <plassa_b@epitech.net>
 ** 
 ** Started on  Thu Oct 25 15:14:37 2012 clery1 plassat
-** Last update Tue Dec 11 11:29:33 2012 clery1 plassat
+** Last update Wed Dec 12 17:08:26 2012 vincent bourcois
 */
 
 #include "project.h"
@@ -52,11 +52,8 @@ void	magic(t_all *all, t_char *first_char, t_char *second_char)
 
 void	potion(t_all *all, t_char *my_char)
 {
-  if (my_char->hp < my_char->hp_max - 80)
-    my_char->hp = my_char->hp + (random() % 40 + 81);
-  else if (my_char->hp < my_char->hp_max && my_char->hp > my_char->hp_max - 80)
-    my_char->hp = my_char->hp_max;
-  my_char->energy = my_char->energy - 40;
+  my_char->hp = my_char->hp + (random() % my_char->healing + my_char->healing * 3);
+  my_char->energy = my_char->energy - 60;
   my_putstr(my_char->name);
   my_putstr(" has ");
   my_put_nbr(my_char->hp);
@@ -84,13 +81,13 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 
       if (first_char->meditate_last == 0)
 	{
-	  first_char->regen_energy = 10;
+	  first_char->regen_energy = first_char->regen_base;
 	  my_putstr("Meditation has now end\n");
 	}
       if (first_char->meditate_last >= 0)
 	--(first_char->meditate_last);
-      if (first_char->energy >= 100 - first_char->regen_energy)
-	first_char->energy == 100;
+      if (first_char->energy >= first_char->energy_max - first_char->regen_energy)
+	first_char->energy == first_char->energy_max;
       else
 	first_char->energy += first_char->regen_energy;
       put_ui_to_window(all);
@@ -106,7 +103,7 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 	option = 1;
       else if (first_char->hp >= first_char->hp_max / 3 * 2 && first_char->energy == 100)
 	option = 2;
-      else if (first_char->hp < first_char->hp_max / 3 * 2 && first_char->energy >= 40 
+      else if (first_char->hp < first_char->hp_max / 3 * 2 && first_char->energy >= 60 
 	       && first_char->meditate_last > 0)
 	option = random() % 2 + 2;
       else if (first_char->hp >= first_char->hp_max / 3 * 2 && first_char->energy >= 40)
@@ -162,7 +159,7 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 	{
 	  my_putstr(first_char->name);
 	  my_putstr(" uses meditation !\n");
-	  first_char->regen_energy = 20;
+	  first_char->regen_energy = first_char->regen_base * 2;
 	  first_char->meditate_last = 3;
 	  put_ui_to_window(all);
 	  usleep(1000000);
