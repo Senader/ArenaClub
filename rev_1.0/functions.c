@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Wed Dec 12 11:07:12 2012 clery1 plassat
+** Last update Wed Dec 12 16:22:44 2012 clery1 plassat
 */
 
 #include <stdio.h>
@@ -26,6 +26,21 @@ int	expose(t_all *all)
     }
   if (all->system.phase == 2)
     end_phase(all, 1);
+  if (all->system.phase == 42)
+    {
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 165, 0xFF0000, "      AAAAAA   AAAAAA");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 180, 0xFF0000, "    SSSSSSSSSSSSSSSSSSS");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 195, 0xFF0000, "  TTTTTTTTTTTTTTTTTTTTTTT");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 210, 0xFF0000, " EEEEEEEEEEEEEEEEEEEEEEEEE");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 225, 0xFF0000, "KKKKKKKKKKKKKKKKKKKKKKKKKKK");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 240, 0xFF0000, "###########################");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 255, 0xFF0000, " EEEEEEEEEEEEEEEEEEEEEEEEE");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 270, 0xFF0000, "  NNNNNNNNNNNNNNNNNNNNNNN");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 285, 0xFF0000, "    CCCCCCCCCCCCCCCCCCC");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 300, 0xFF0000, "      UUUUUUUUUUUUUUU");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 315, 0xFF0000, "         LLLLLLLLL");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 165, 330, 0xFF0000, "            EEE");
+    }
 }
 
 int	end_phase(t_all *all, int once)
@@ -68,6 +83,9 @@ int	end_phase(t_all *all, int once)
 
 int	gere_key(int key, t_all *all)
 {
+  int	x = 12;
+  int	y;
+
   menu_cursor(key, all);
   if (key == 32)
     {
@@ -84,6 +102,22 @@ int	gere_key(int key, t_all *all)
 	  all->system.phase = 1;
 	  mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
 	  put_ui_to_window(all);
+	}
+    }
+  if (all->system.phase == 0 && key == 269025053)
+    {
+      all->system.phase = 42;
+      mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
+      while (x < 500)
+	{
+	  y = 0;
+	  while (y < 500)
+	    {
+	      mlx_string_put(all->system.mlx_p, all->system.mlx_w, x, y,
+			     0xFF0000, "ASTEK ENCULE !!!");
+	      y += 15;
+	    }
+	  x += 102;
 	}
     }
   if (key == 65307 && all->system.phase != 2 && all->system.phase != 4)
