@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Wed Dec 12 10:51:43 2012 vincent bourcois
+** Last update Wed Dec 12 11:07:12 2012 clery1 plassat
 */
 
 #include <stdio.h>
@@ -20,7 +20,10 @@ int	expose(t_all *all)
   if (all->system.phase == 1)
     put_ui_to_window(all);
   if (all->system.phase == 0)
-    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 250, 0xFFFFFF, "PRESS SPACE");
+    {
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 250, 0xFFFFFF, "PRESS SPACE");
+      mlx_string_put(all->system.mlx_p, all->system.mlx_w, 450, 490, 0xFF0000, "rev 1.0"); 
+    }
   if (all->system.phase == 2)
     end_phase(all, 1);
 }

@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Tue Dec 11 20:45:19 2012 vincent bourcois
+** Last update Wed Dec 12 11:07:22 2012 clery1 plassat
 */
 
 #include <unistd.h>
@@ -30,7 +30,6 @@ int	main()
   all->system.phase = 0;
   all->system.cursor = 0;
   init_game(all);
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 250, 0xFF0000, "PRESS SPACE"); 
   mlx_expose_hook(all->system.mlx_w, expose_ptr, all);
   mlx_key_hook(all->system.mlx_w, gere_key_ptr, all);
   mlx_loop(all->system.mlx_p);
