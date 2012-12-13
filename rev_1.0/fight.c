@@ -5,7 +5,7 @@
 ** Login   <plassa_b@epitech.net>
 ** 
 ** Started on  Thu Oct 25 15:14:37 2012 clery1 plassat
-** Last update Wed Dec 12 17:08:26 2012 vincent bourcois
+** Last update Thu Dec 13 12:11:28 2012 vincent bourcois
 */
 
 #include "project.h"
@@ -14,6 +14,11 @@
 void	attack(t_all *all, t_char *first_char, t_char *second_char)
 {
   srandom(time(0) * getpid());
+  if ((random() % 101) <= first_char->crit)
+    {
+      second_char->hp -= (random() % (first_char->damages / 2) + first_char->damages);
+      printf("Critical hit !\n");
+    }
   second_char->hp -= (random() % (first_char->damages / 2) + first_char->damages);
   if (second_char->hp > 0)
     {
@@ -33,6 +38,11 @@ void	attack(t_all *all, t_char *first_char, t_char *second_char)
 void	magic(t_all *all, t_char *first_char, t_char *second_char)
 {
   srandom(time(0) * getpid());
+  if ((random() % 101) <= first_char->crit)
+    {
+      second_char->hp = second_char->hp - (random() % first_char->damages + first_char->damages * 2);
+      printf("Critical hit !\n");
+    }
   second_char->hp = second_char->hp - (random() % first_char->damages + first_char->damages * 2);
   first_char->energy -= 40;
   if (second_char->hp > 0)
@@ -52,6 +62,12 @@ void	magic(t_all *all, t_char *first_char, t_char *second_char)
 
 void	potion(t_all *all, t_char *my_char)
 {
+  srandom(time(0) * getpid());
+  if ((random() % 101) <= my_char->crit)
+    {
+      my_char->hp = my_char->hp + (random() % my_char->healing + my_char->healing * 3);
+      printf("Critical heal !\n");
+    }
   my_char->hp = my_char->hp + (random() % my_char->healing + my_char->healing * 3);
   my_char->energy = my_char->energy - 60;
   my_putstr(my_char->name);

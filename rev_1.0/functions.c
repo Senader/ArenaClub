@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Wed Dec 12 17:44:30 2012 clery1 plassat
+** Last update Thu Dec 13 12:21:45 2012 vincent bourcois
 */
 
 #include <stdio.h>
@@ -381,7 +381,15 @@ int	init_game(t_all *all)
   value[j] = '\0';
   ++i;
   all->p1.healing = my_getnbr(value);
+  j = 0;
+  while (file[i] != '\n')
+    value[j++] = file[i++];
+  value[j] = '\0';
+  ++i;
+  all->p1.crit = my_getnbr(value);
   close(fd);
+  if (all->p1.crit == 0)
+    all->p1.crit = 7;
 
   all->p2.name = malloc(sizeof(all->p2.name) * 6);
   all->p2.name = "Enemy";
@@ -395,6 +403,7 @@ int	init_game(t_all *all)
   all->p2.regen_energy = 10;  
   all->p2.regen_base = 10;  
   all->p2.xp = 0;
+  all->p2.crit = 7;
 }
 
 int	put_enemy_ui(t_all *all)
@@ -483,6 +492,8 @@ int	save(t_all *all)
   write(fd, int_to_char(all->p1.damages), my_strlen(int_to_char(all->p1.damages)));
   write(fd, &x, 1);
   write(fd, int_to_char(all->p1.healing), my_strlen(int_to_char(all->p1.healing)));
+  write(fd, &x, 1);
+  write(fd, int_to_char(all->p1.crit), my_strlen(int_to_char(all->p1.crit)));
   write(fd, &x, 1);
   close(fd);
   return (0);

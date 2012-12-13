@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Nov 22 20:48:52 2012 vincent bourcois
-** Last update Tue Dec 11 20:39:57 2012 vincent bourcois
+** Last update Thu Dec 13 12:11:09 2012 vincent bourcois
 */
 
 #ifndef PROJECT_H_
@@ -22,6 +22,7 @@ typedef struct	s_character
   int	regen_energy;
   int	damages;
   int	healing;
+  int	crit;
   int	meditate_last;
   int	xp;
   int	lvl;
@@ -44,6 +45,7 @@ typedef struct	s_all
 }t_all;
 
 #include <stdlib.h>
+#include <stdio.h>
 
 void	swap(char *, char *);
 int	my_strlength(char *);
