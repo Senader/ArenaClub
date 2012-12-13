@@ -10,3 +10,6 @@
 # Executables
 *.exe
 *.app
+
+# Saving file
+*.svg

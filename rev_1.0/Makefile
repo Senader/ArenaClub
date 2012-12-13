@@ -5,7 +5,7 @@
 ## Login   <bourco_v@epitech.net>
 ## 
 ## Started on  Wed Oct 24 14:09:59 2012 vincent bourcois
-## Last update Tue Dec 11 20:37:28 2012 vincent bourcois
+## Last update Thu Dec 13 11:45:34 2012 vincent bourcois
 ##
 
 SRC		= main.c \
@@ -16,7 +16,7 @@ SRC		= main.c \
 		getfile.c \
 		menus.c
 
-NAME		= game
+NAME		= game.exe
 
 OBJ		= $(SRC:.c=.o)
 
