@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Tue Dec 11 11:46:03 2012 vincent bourcois
-** Last update Wed Dec 12 10:29:30 2012 clery1 plassat
+** Last update Wed Dec 12 17:55:52 2012 clery1 plassat
 */
 
 #include "project.h"
@@ -21,8 +21,28 @@ int	launch_menu(t_all *all)
     }
   if (all->system.cursor == 1)
     {
-      
       see_stats(all);
+    }
+  if (all->system.cursor == 2)
+    {
+      all->system.cursor = -1;
+      start(all);
+    }
+}
+
+int	launch_start(t_all *all)
+{
+  if (all->system.cursor == 0)
+    {
+      all->system.phase = 1;
+      init_game(all);
+      mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
+      put_ui_to_window(all);
+    }
+  if (all->system.cursor == 1)
+    {
+      all->system.cursor = -1;
+      menu(all);      
     }
   if (all->system.cursor == 2)
     exit(1);
@@ -58,12 +78,44 @@ int	menu(t_all *all)
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 217, 475, 0xFFFFFF, "Press Enter");
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFFFF, "Go to the armory !");
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFFFF, "Flee (coward)");
-  if (all->system.cursor == 0)
+  if (all->system.cursor == 0 || all->system.cursor == -1)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 200, 0xFFFF00, "Fight a bot !");
   if (all->system.cursor == 1)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFF00, "Go to the armory !");
   if (all->system.cursor == 2)
     mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFF00, "Flee (coward)");
+}
+
+int	start(t_all *all)
+{
+  all->system.phase = 5;
+  mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 205, 200, 0xFFFFFF, "Create a character");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 217, 475, 0xFFFFFF, "Press Enter");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 207, 250, 0xFFFFFF, "Load a character");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFFFF, "Quit the game");
+  if (all->system.cursor == 0 || all->system.cursor == -1)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 205, 200, 0xFFFF00, "Create a character");
+  if (all->system.cursor == 1)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 207, 250, 0xFFFF00, "Load a character");
+  if (all->system.cursor == 2)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFF00, "Quit the game");
+}
+
+int	load_char(t_all *all)
+{
+  all->system.phase = 6;
+  mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 200, 0xFFFFFF, "Which do you want to play ?");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 217, 475, 0xFFFFFF, "Press Enter");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFFFF, "Load a character");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFFFF, "Quit the game");
+  if (all->system.cursor == 0)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 200, 0xFFFF00, "Create a character");
+  if (all->system.cursor == 1)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 200, 250, 0xFFFF00, "Load a character");
+  if (all->system.cursor == 2)
+    mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 300, 0xFFFF00, "Quit the game");
 }
 
 int	menu_cursor(int key, t_all *all)
@@ -74,6 +126,8 @@ int	menu_cursor(int key, t_all *all)
 	{
 	  key = 0;
 	  launch_menu(all);
+	  if (all->system.cursor == -1)
+	    all->system.cursor = 0;
 	}
       if (key == 65362) // upper
 	{
@@ -99,6 +153,46 @@ int	menu_cursor(int key, t_all *all)
 	    {
 	      all->system.cursor += 1;
 	      menu(all);
+	    }
+	}
+    }
+}
+
+int	start_cursor(int key, t_all *all)
+{
+  if (all->system.phase == 5)
+    {
+      if (key == 32 || key == 65293)
+	{
+	  key = 0;
+	  launch_start(all);
+	  if (all->system.cursor == -1)
+	    all->system.cursor = 0;
+	}
+      if (key == 65362) // upper
+	{
+	  if (all->system.cursor == 0)
+	    {
+	      all->system.cursor = 2;
+	      start(all);
+	    }
+	  else
+	    {
+	      all->system.cursor -= 1;
+	      start(all);
+	    }
+	}
+      if (key == 65364) // down
+	{
+	  if (all->system.cursor == 2)
+	    {
+	      all->system.cursor = 0;
+	      start(all);
+	    }
+	  else
+	    {
+	      all->system.cursor += 1;
+	      start(all);
 	    }
 	}
     }

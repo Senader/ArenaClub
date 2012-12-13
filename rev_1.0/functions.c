@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Wed Dec 12 17:13:05 2012 vincent bourcois
+** Last update Wed Dec 12 17:44:30 2012 clery1 plassat
 */
 
 #include <stdio.h>
@@ -89,12 +89,13 @@ int	gere_key(int key, t_all *all)
   int	y;
 
   menu_cursor(key, all);
+  start_cursor(key, all);
   if (key == 32)
     {
       if (all->system.phase == 0)
 	{
 	  all->system.phase = 3;
-	  menu(all);
+	  start(all);
 	}
       if (all->system.phase == 4)
 	menu(all);
@@ -212,15 +213,15 @@ int	gere_key(int key, t_all *all)
     }
 }
 
-  int	clear_sides(t_all *all)
-  {
-    void	*mlx_clear;
-    int	x;
-    int	y;
+int	clear_sides(t_all *all)
+{
+  void	*mlx_clear;
+  int	x;
+  int	y;
 
-    mlx_clear = mlx_new_image(all->system.mlx_p, 500, 318);
-    mlx_put_image_to_window(all->system.mlx_p, all->system.mlx_w, mlx_clear, 0, 42);  
-  }
+  mlx_clear = mlx_new_image(all->system.mlx_p, 500, 318);
+  mlx_put_image_to_window(all->system.mlx_p, all->system.mlx_w, mlx_clear, 0, 42);  
+}
 
 int	put_ui_to_window(t_all *all)
 {
@@ -325,7 +326,7 @@ int	init_game(t_all *all)
   fd = open("save.svg", O_RDONLY);
   if (fd == -1)
     {
-      printf("Failed to load the save file.");
+      printf("Failed to load the save file.\n");
       return (-1);
     }
   file = getfile(fd);
@@ -463,7 +464,7 @@ int	save(t_all *all)
   fd = open("save.svg", O_WRONLY);
   if (fd == -1)
     {
-      printf("Failed to save char.");
+      printf("Failed to save char.\n");
       return (-1);
     }
   x = '\n';
