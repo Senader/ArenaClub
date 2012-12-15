@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Thu Dec 13 12:21:58 2012 vincent bourcois
+** Last update Sun Dec 16 00:14:00 2012 vincent bourcois
 */
 
 #include <unistd.h>
@@ -28,6 +28,7 @@ int	main()
   all->system.mlx_p = mlx_init();
   all->system.mlx_w = mlx_new_window(all->system.mlx_p, 500, 500, "Window");
   all->system.phase = 0;
+  all->system.enemy_choice = 0;
   all->system.cursor = 0;
   init_game(all);
   mlx_expose_hook(all->system.mlx_w, expose_ptr, all);

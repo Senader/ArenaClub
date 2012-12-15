@@ -5,7 +5,7 @@
 ** Login   <plassa_b@epitech.net>
 ** 
 ** Started on  Thu Oct 25 15:14:37 2012 clery1 plassat
-** Last update Thu Dec 13 12:11:28 2012 vincent bourcois
+** Last update Sun Dec 16 00:17:05 2012 vincent bourcois
 */
 
 #include "project.h"
@@ -148,6 +148,7 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 	  put_ui_to_window(all);
 	  usleep(1000000);
 	  attack(all, first_char, second_char);
+	  all->system.enemy_choice = 1;
 	  put_ui_to_window(all);
 	  return ;
 	}
@@ -158,6 +159,7 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 	  put_ui_to_window(all);
 	  usleep(1000000);
 	  magic(all, first_char, second_char);
+	  all->system.enemy_choice = 2;
 	  put_ui_to_window(all);
 	  return ;
 	}
@@ -168,6 +170,7 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 	  put_ui_to_window(all);
 	  usleep(1000000);
 	  potion(all, first_char);
+	  all->system.enemy_choice = 3;
 	  put_ui_to_window(all);
 	  return ;
 	}
@@ -177,6 +180,7 @@ void	enemy_phase(t_all *all, t_char *first_char, t_char *second_char)
 	  my_putstr(" uses meditation !\n");
 	  first_char->regen_energy = first_char->regen_base * 2;
 	  first_char->meditate_last = 3;
+	  all->system.enemy_choice = 4;
 	  put_ui_to_window(all);
 	  usleep(1000000);
 	  put_ui_to_window(all);

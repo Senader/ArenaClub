@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Sat Dec 15 16:53:16 2012 vincent bourcois
+** Last update Sun Dec 16 00:20:43 2012 vincent bourcois
 */
 
 #include <stdio.h>
@@ -312,6 +312,16 @@ int		put_ui_to_window(t_all *all)
       if (all->system.error_msg == 1)
 	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 50, 250, 0xFF0000, "Not enough energy");
       all->system.error_msg = 0;
+      if (all->system.enemy_choice != 0)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 157, 200, 0xFFFFFF, all->p2.name);
+      if (all->system.enemy_choice == 1)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 187, 200, 0xFFFFFF, " attacks !");
+      if (all->system.enemy_choice == 2)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 187, 200, 0xFFFFFF, " uses a special attack !");
+      if (all->system.enemy_choice == 3)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 187, 200, 0xFFFFFF, " heals himself !");
+      if (all->system.enemy_choice == 4)
+	mlx_string_put(all->system.mlx_p, all->system.mlx_w, 187, 200, 0xFFFFFF, " uses meditation !");
     }
   if (all->p2.hp <= 0 || all->p1.hp <= 0)
     end_phase(all, 0);
@@ -325,6 +335,7 @@ int	init_game(t_all *all)
   char	*file;
   char	*value;
 
+  all->system.enemy_choice = 0;
   fd = open("save.svg", O_RDONLY);
   if (fd == -1)
     {

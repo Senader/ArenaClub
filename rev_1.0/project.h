@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Nov 22 20:48:52 2012 vincent bourcois
-** Last update Thu Dec 13 12:11:09 2012 vincent bourcois
+** Last update Sun Dec 16 00:14:58 2012 vincent bourcois
 */
 
 #ifndef PROJECT_H_
@@ -35,6 +35,7 @@ typedef struct	s_system
   int	error_msg;
   int	phase;
   int	cursor;
+  int	enemy_choice;
 }t_sys;
 
 typedef struct	s_all
