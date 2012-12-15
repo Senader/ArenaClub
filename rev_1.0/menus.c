@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Tue Dec 11 11:46:03 2012 vincent bourcois
-** Last update Wed Dec 12 17:55:52 2012 clery1 plassat
+** Last update Sat Dec 15 16:22:00 2012 vincent bourcois
 */
 
 #include "project.h"
@@ -53,20 +53,22 @@ int	see_stats(t_all *all)
   all->system.phase = 4;
   mlx_clear_window(all->system.mlx_p, all->system.mlx_w);
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 225, 70, 0xFF1111, all->p1.name);
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 115, 0xFFFFFF, "Energy : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 115, 0xFFFFFF, int_to_char(all->p1.energy_max));
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 150, 0xFFFFFF, "Healt points : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 150, 0xFFFFFF, int_to_char(all->p1.hp_max));
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 190, 0xFFFFFF, "Energy regen per turn : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 190, 0xFFFFFF, int_to_char(all->p1.regen_base));
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 230, 0xFFFFFF, "Damages : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 230, 0xFFFFFF, int_to_char(all->p1.damages));
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 270, 0xFFFFFF, "Healing : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 270, 0xFFFFFF, int_to_char(all->p1.healing));
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 310, 0xFFFFFF, "Level : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 310, 0xFFFFFF, int_to_char(all->p1.lvl));
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 350, 0xFFFFFF, "Experience : ");
-  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 350, 0xFFFFFF, int_to_char(all->p1.xp));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 135, 0xFFFFFF, "Energy : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 135, 0xFFFFFF, int_to_char(all->p1.energy_max));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 115, 0xFFFFFF, "Healt points : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 115, 0xFFFFFF, int_to_char(all->p1.hp_max));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 155, 0xFFFFFF, "Energy regen per turn : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 155, 0xFFFFFF, int_to_char(all->p1.regen_base));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 175, 0xFFFFFF, "Damages : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 175, 0xFFFFFF, int_to_char(all->p1.damages));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 195, 0xFFFFFF, "Healing : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 195, 0xFFFFFF, int_to_char(all->p1.healing));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 215, 0xFFFFFF, "Critical chance :              %");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 215, 0xFFFFFF, int_to_char(all->p1.crit));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 235, 0xFFFFFF, "Level : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 235, 0xFFFFFF, int_to_char(all->p1.lvl));
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 150, 255, 0xFFFFFF, "Experience : ");
+  mlx_string_put(all->system.mlx_p, all->system.mlx_w, 320, 255, 0xFFFFFF, int_to_char(all->p1.xp));
   mlx_string_put(all->system.mlx_p, all->system.mlx_w, 190, 475, 0xFFFFFF, "Press Space to quit");
 }
 
