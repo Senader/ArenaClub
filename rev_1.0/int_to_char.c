@@ -5,9 +5,10 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Nov 22 20:25:07 2012 vincent bourcois
-** Last update Mon Dec 10 15:37:04 2012 clery1 plassat
+** Last update Sat Dec 15 17:07:15 2012 vincent bourcois
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 
 void	swap(char *c, char *d)

@@ -5,7 +5,7 @@
 ** Login   <bourco_v@epitech.net>
 ** 
 ** Started on  Thu Oct 25 09:45:12 2012 vincent bourcois
-** Last update Thu Dec 13 12:21:45 2012 vincent bourcois
+** Last update Sat Dec 15 16:53:16 2012 vincent bourcois
 */
 
 #include <stdio.h>
@@ -19,6 +19,8 @@ int	expose(t_all *all)
 {
   if (all->system.phase == 1)
     put_ui_to_window(all);
+  if (all->system.phase == 4)
+    see_stats(all);
   if (all->system.phase == 0)
     {
       mlx_string_put(all->system.mlx_p, all->system.mlx_w, 210, 250, 0xFFFFFF, "PRESS SPACE");
@@ -223,12 +225,12 @@ int	clear_sides(t_all *all)
   mlx_put_image_to_window(all->system.mlx_p, all->system.mlx_w, mlx_clear, 0, 42);  
 }
 
-int	put_ui_to_window(t_all *all)
+int		put_ui_to_window(t_all *all)
 {
-  void	*mlx_i;
-  int	x = 0;
-  int	y = 0;
-  int	i;
+  void		*mlx_i;
+  double       	x = 0;
+  int		y = 0;
+  int		i;
 
   if (all->system.phase == 1)
     {
@@ -266,7 +268,7 @@ int	put_ui_to_window(t_all *all)
 	  mlx_pixel_put_to_image(mlx_i, x + 499, y++, 0xFFFFFF);
 	}
       y = 0;
-      while ((all->p1.energy * 5) > x && x < 501)
+      while (((500000 / all->p1.energy_max) * all->p1.energy) / 1000 > x && x < 501)
 	{
 	  i = 21;
 	  while (i < 40)
@@ -274,7 +276,7 @@ int	put_ui_to_window(t_all *all)
 	  ++x;
 	}
       x = 0;
-      while ((all->p1.hp / 2) > x && x < 501)
+      while ((all->p1.hp / (all->p1.hp_max / 500)) > x && x < 501)
 	{
 	  i = 1;
 	  while (i < 20)
